@@ -3,6 +3,9 @@
     With the front-end user experience the visual aspect of our pages becomes more and more important because we want our pages
     to look good, be user friendly, and accessible
 
+    *Note* Sometimes CSS can be pretty hard, especially if you have a lot of conflicting styles, so usinga tool like bootstrap or tailwind is
+    recommended
+
     Inline
         Uses the style attribute on any relevant element and allows you to style that specific element
 
@@ -10,12 +13,25 @@
         Uses the style TAG inside of the head tag
 
     External
+        Uses an external stylesheet to style elements (preferred way to style using CSS)
+
+
+    Why are there 3 kinds of CSS?
+        There are different rules for how CSS is applied based off its location, namely proximity to the element it's affecting.
+        There are different priorities for the different kinds of CSS: Inline > Internal > External
+
+        If external has the lowest priority, why is it preferred?
+            An external sheet can be used multiple times by multiple files
+            If you need to change the styling for whatever reason, external style sheets are easily overridden so you don't need to worry about
+            priority (barring some special conditions)
  -->
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Recall that the head tag is used to provide metadata about the page (this could be things like tab name, SEO tags, as well as
+        STYLING) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSS Intro</title>
@@ -27,6 +43,8 @@
         #my-special-div{
             border: 2px black solid;
             color: grey;
+            padding-left: 180px;
+            margin: 40px;
         }
 
         /* Class Selector -> Used to select ALL elements with the same class name */
@@ -34,6 +52,8 @@
             background-color: bisque;
             border: 5px slateblue solid;
             border-radius: 10px;
+            margin-right: auto;
+            margin-left: auto;
         }
 
         /* Tag Selector -> Used to select all elements of a specific type */
@@ -41,6 +61,9 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
     </style>
+
+    <!-- To use external CSS we will link in the stylesheet -->
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 
@@ -80,6 +103,7 @@
 
         <div class="div-class">
             <p>Inside the second of the div class</p>
+            <p id="special-paragraph" style="font-size: xx-small;">This is a special paragraph!</p>
         </div>
     </div>
     
