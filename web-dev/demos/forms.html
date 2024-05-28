@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Form</title>
+</head>
+<body>
+    <!-- Forms are a nice way to take in various pieces of user data. They can sometimes cause some headaches in certain situations (in 
+        which case, you'll like just use a div instead) but for the most prat they're a concise way to take in info in various formats -->
+
+        <form>
+            <h1>Registration Form</h1>
+            <label for="name-input">Name: </label>
+            <input type="text" name="name-input" placeholder="Sample Value" required>
+
+            <br> <br> 
+            <!-- br is used for a line break to create some space -->
+            <label for="age-input">Age: </label>
+            <input type="number" min="13" max="100">
+
+            <br> <br>
+
+            <!-- We can use a drop down for selections -->
+            <label for="state-input">State: </label>
+            <select name="state-input">
+                <option>FL</option>
+                <option>TX</option>
+            </select>
+
+            <button>Submit button</button>
+        </form>
+    
+</body>
+</html>

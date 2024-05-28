@@ -1,0 +1,77 @@
+<!-- 
+    Anything contained inside of here is a comment and will be ignored!
+
+    This can be multiline or singleline, it doesn't really matter as long as it is contained
+
+    The very first uncommented line in an HTML page should be the doctype declaration which basicall says this is an HTML document
+-->
+
+<!DOCTYPE html>
+
+<!-- After the doctype declaration we have the root tag for an html page
+
+    HTML (Hypertext markup language) is a tag-based markup language that allows us to define the structure of a web page
+
+    Elements: (Sometimes referred to as tags) pieces of info that determine things about the web page and what gets rendered on the screen
+    Attributes: Different ways we can affect those elements (applying styling, hiding, adding a unique identifier, etc)
+-->
+
+<html>
+    <!-- There are two major pieces inside an html tag
+    
+        Head: Contains metadata about the webpage (tabname, styling, any links etc)
+        Body: Contains the actual info of what's rendered on the page itself
+    -->
+
+    <head>
+        <!-- The title will be the tab name for the web page -->
+        <title>Intro to HTML</title>
+    </head>
+
+    <body>
+        <!-- Everything inside of here actually gets rendered on the page itself! -->
+        <h1>Hello World!</h1>
+
+        <!-- The body of the html document can have a variety of different tags
+            <h1> - <h6> -> These are used for different headers, getting progressively smaller
+            <p> -> This is used for general text (paragraph tag)
+            <input> -> Allows you to take in user input
+            <button> -> This is used to create a button
+            <img> -> used for images
+            <ol> <ul> <li> -> These are used for different lists
+            <table> for tables
+            <div> This creates a division on the page to hold related elements together
+            <a> stands for anchor tag (used to link between html pages)
+        -->
+
+        <!-- With headers, the bigger the number the smaller the text -->
+        <h2>This is an h2 Heading</h2>
+        <h5> This is a subheading</h5>
+
+        <p> This is used for general text and various paragraphs.
+
+
+
+
+            As a reminder, HTML doesn't care about whitespace
+        </p>
+
+        <div>
+            <p>This could be a sample form: </p>
+            <input placeholder="Username" type="text">
+            <input placeholder="Password" type="password">
+            <button>Login!</button>
+        </div>
+
+        <p> Check out this image of a grilled salmon <a href="./images.html">here</a> </p>
+        <p> Check out this grilled salmon recipe <a href="./list-tables.html">here</a> </p>
+        <p> Check out a sample form <a href="./forms.html">here</a> </p>
+
+        <!-- Using the a tag brings up a point we should talk about, specifically inline vs block elements in HTML
+        
+        
+            block -> elements that take up the entire width of their container (h#, p)
+            inline -> elements that only take up the necessary space (a, span, input)
+        -->
+    </body>
+</html>
