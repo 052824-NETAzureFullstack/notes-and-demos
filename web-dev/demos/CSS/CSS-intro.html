@@ -1,0 +1,87 @@
+<!-- 
+    CSS (Cascading Style Sheets) is used to style the HTML structure.
+    With the front-end user experience the visual aspect of our pages becomes more and more important because we want our pages
+    to look good, be user friendly, and accessible
+
+    Inline
+        Uses the style attribute on any relevant element and allows you to style that specific element
+
+    Internal
+        Uses the style TAG inside of the head tag
+
+    External
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Intro</title>
+
+    <style>
+        /* Inside of the style tag, this is pure CSS (notice the difference in the comment) */
+
+        /* ID Selector -> Used to grab a specific element and style it */
+        #my-special-div{
+            border: 2px black solid;
+            color: grey;
+        }
+
+        /* Class Selector -> Used to select ALL elements with the same class name */
+        .div-class{
+            background-color: bisque;
+            border: 5px slateblue solid;
+            border-radius: 10px;
+        }
+
+        /* Tag Selector -> Used to select all elements of a specific type */
+        span{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CSS Intro</h1>
+
+    <!-- Inline styling uses the style attribute and allows us to style a specific element right where we define it -->
+    <p style="color: aquamarine; background-color: black;">CSS rules are defined in key-pair values separated by ;</p>
+
+    <span style="color:yellow; background-color: cadetblue;"> 
+        The paragraph (p) tag is a block element, the span tag is the inline alternative (it only takes up the necessary space)
+    </span>
+
+    <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Let's try a different font</p>
+
+
+    <div>
+        <h2>CSS Selectors</h2>
+
+        <h3> Element, Class and Id Selectors</h3>
+        
+        <!-- 
+            What is an Id? An Id is a unique identifier allowing you to locate one specific element in the html page.
+            There's nothing stopping you from overloading these names by accident so be careful but this can be used for both
+            CSS and JS
+        -->
+        <div id="my-special-div">
+            <p>Inside my special div</p>
+        </div>
+
+        <!-- 
+            A Class is an identifier allowing you to select MULTIPLE elements (as opposed to one with the Id attribute)
+            This can also be used in CSS and JS and is useful if you're attempting to apply styling or logic to multiple blocks of HTML
+         -->
+        <div class="div-class">
+            <p>Inside the first of the div class</p>
+        </div>
+
+        <div class="div-class">
+            <p>Inside the second of the div class</p>
+        </div>
+    </div>
+    
+</body>
+</html>
