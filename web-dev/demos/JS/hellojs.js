@@ -115,3 +115,82 @@ console.log(samplePerson.name)
 
 samplePerson.name = 'Vincent'
 console.log(samplePerson)
+
+/*
+Control Flow
+
+This is a way to control the flow of the execution of your code
+Typically code runs from top to bottom in order but anything that changes that order (skipping lines or repeating lines) is considered 
+control flow
+
+If-else statements
+For loops
+While loop
+*/
+
+// If-Else statements allow you to evaluate a condition and run a specific block of code depending on the value on that condition
+let a = 0
+
+if (a > 0){
+    console.log("A is a positive number!")
+} else if (a == 0){
+    console.log("A is zero!")
+} else {
+    console.log("A is a negative number!")
+}
+
+// For Loops are used to repeat a block of code a number of times
+for (let i = 1; i <= 5; i++){
+    console.log('The number is ' + i)
+}
+
+console.log('-------------------------')
+
+// While loops continue to execute until a condition is false
+
+let targetNumber = 3;
+let randomNumber = Math.floor(Math.random() * 6)
+
+while (targetNumber != randomNumber){
+    console.log("The old random number is " + randomNumber)
+    randomNumber = Math.floor(Math.random() * 6)
+    console.log("The new random number is " + randomNumber)
+}
+
+console.log("The random number equals the target number!")
+
+
+// Do-while loop
+// ALWAYS executes at least once since it runs the loop BEFORE checking the conditional
+do {
+    console.log('Inside the do-while loop')
+} while (false);
+
+// Some special For-Loops as well
+
+// For-Of loop
+// Allows us to work with iterable things (like arrays of values) and do something for each value
+let simpleArray = [1,21,3,14,5]
+
+for (let num of simpleArray){
+    console.log('The square of ' + num + ' is ' + num*num)
+}
+
+// For-In loop
+// Allows you to iterate over an object's properties and allow you to do something for every one
+
+let person = {
+    name: 'Kaitlyn',
+    occupation: 'Lab technician',
+    age: 25,
+    isMarried: false
+}
+
+for (let prop in person){
+    // console.log(prop + " = " + person[prop])
+    if (person[prop] == false){
+        person[prop] = true
+    }
+}
+
+console.log(person)
