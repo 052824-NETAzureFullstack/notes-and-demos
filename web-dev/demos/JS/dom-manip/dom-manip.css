@@ -1,0 +1,26 @@
+/* Recall in CSS we can select elements in a variety of ways but the 3 most common are id, class and tag */
+
+/* Let's select the DIV with id= "userContainer */
+#userContainer{
+    background-color: beige;
+    width: 1000px;
+    margin-left:auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content:center;
+    justify-content: center;
+}
+
+/* Let's select all elements with the class= 'user */
+
+.user{
+    border: 2px black solid;
+    border-radius: 10px;
+    text-align:center;
+    width:250px;
+    margin: 20px
+}
+
+/* A lot of this CSS is just eyeballed and estimated, 
+I definitely recommend making use of tools like bootstrap */

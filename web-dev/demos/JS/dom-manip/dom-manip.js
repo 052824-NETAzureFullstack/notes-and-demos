@@ -63,6 +63,12 @@ function populateUsers(users){
         `
 
 
+        // We can manipulate the element in different ways as well, one of the most important is getting/setting 
+        // various attributes
+
+        uDiv.setAttribute('class', 'user')
+        uDiv.setAttribute('id', `user-${user.id}` ) // When the element is finished we should see id user-1
+
 
 
 

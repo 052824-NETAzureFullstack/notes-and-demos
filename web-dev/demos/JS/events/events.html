@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <!-- 
+        What is an event? 
+
+        An event is basically an interaction with the web page itself. This could be a variety of things
+        from clicking, to mousing over, to pressing a key or focusing on one element or another
+
+        Using JS we can listen for any one of these events and do some logic based off that
+    -->
+
+    <h1>Register a New User: </h1>
+
+    <label for="usernameInput">Username: </label>
+    <input id="usernameInput" type="text" placeholder="Username" onmouseover="usernameMouseOver()">
+
+    <label for="passwordInput">Password: </label>
+    <input id="passwordInput" type="password" placeholder="Password">
+
+    <button id="createNewUserButton" >Create New User!</button>
+
+
+    
+    <script src="events.js"></script>
+</body>
+</html>
