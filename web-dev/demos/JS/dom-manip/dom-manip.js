@@ -76,4 +76,73 @@ function populateUsers(users){
     }
 }
 
-populateUsers(users)
+// populateUsers(users)
+
+
+
+//PROMISES
+
+/*
+Promises are an object in JS that act as a placeholder for a future value. Most async functions return them
+implicitly so knowing how to work with them is important. We can construct our promise using the constuctor
+and providing the appropriate callback functions
+*/
+
+let promise = new Promise(function (resolve, reject) {
+    // This is the inside of a promise. We won't see them like this normally, but for demonstration we'll look
+    // at it like this
+
+    let x = 5
+    let y = 3
+
+    if (x >= y){
+        resolve(x)
+    } else {
+        reject(x)
+    }
+})
+
+// Once a promise exists (doesn't matter if you made it or it came from somewhere else) you chain consumer functions
+// onto it
+
+// then() is a function that takes a callback function and executes when the promise resolves only
+promise
+    .then((x) => x = x * 2) // State of x at this point is 10
+    .then((x) => console.log(x))
+    
+
+
+/*
+There are a couple of consumer functions to be aware of:
+ then() is called when the promise resolves
+ catch() is called when the promise rejects
+ finally() is called after either a resolve or a rejection
+*/
+
+promise
+    .then(() => console.log("We resolved!"))
+    .catch(() => console.log("There was an error!"))
+    .finally(() => console.log("This happens no matter what!"))
+
+/*
+This might seem really confusing and ethereal right now, but it'll make a little more sense with a concrete example
+
+To get the info for our users, instead of using the hardcoded list above, let's try to make an API call
+using an HTTP Request
+
+To do this we'll use the Fetch API which is a built in tool in JS that allows to send customized HTTP requests
+and parse the response as necessary. It was introduced as an alternative to something called AJAX, which was a 
+more syntactically diffult way to send HTTP Requests
+*/
+
+let data = fetch('https://jsonplaceholder.typicode.com/users')
+
+// A regular fetch call like this sends a GET request by default, we'll look to see how this changes later
+
+// The information will come back from the API as a JSON (JavaScript Object Notation) string, we need to turn this
+// string into a JS object that we can work with. To do this, the fetch API has the built in .json() method
+
+data
+    .then((data) => data.json()) // This step turns the string into an actual JS object
+    .then ((response) => populateUsers(response))
+    .catch((error) => console.log("There was an error in our fetch request!"))
