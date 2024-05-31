@@ -61,3 +61,51 @@ function voidReturn(message) {
     console.log(message);
 }
 voidReturn('Hello World!');
+// Let's imagine we're creating a function that takes in a bit more complex data type
+function sendOfferLetter(emailObject) {
+    // Goal of this function is to send off an email with an offer letter to a prospective employee
+    console.log(`Hello ${emailObject.email}, we'd like to extend an offer of employement for the
+     ${emailObject.position} position. The starting salary will be $ ${emailObject.salary}`);
+}
+let sampleEmailObject = {
+    email: 'bryan.serfozo@revature.com',
+    salary: 50000,
+    position: 'Java Full Stack Trainer'
+};
+// Since the fields match up between the sampleEmailObject and the function parameters, I can pass the object
+// to the function itself
+sendOfferLetter(sampleEmailObject);
+let wrongEmailObject = {
+    email: 'ethan@revature.com',
+    name: 'ethan',
+    opportunity: 'Java Full Stack Trainer'
+};
+// This email type is now a custom type which I can assign variables to
+let emailTypeAlias = {
+    email: "",
+    salary: 1234,
+    position: ""
+};
+function sendOfferLetterWithTypeAlias(emailObject) {
+}
+// What if we don't need EVERY field. Some people have every field but not all. 
+// Now I can create all of the people that I want and I can guarantee that they will fit this shape
+let p1 = {
+    firstName: "kaitlyn",
+    lastName: "graves",
+    age: 26,
+    isMarried: false
+};
+let p2 = {
+    firstName: 'John',
+    lastName: 'Smith',
+    isMarried: true
+};
+// We'll mainly use interfaces and a lot of the time this is used to define the shape of the data coming back from
+// an api call. This way you can guarantee you have the appropriate fields in your frontend
+// NEVER Datatype
+// With luck, you'll never end up really using this but it does exist. This is used for a function that will
+// never return a value (think of a function that always throws an exception)
+function neverFunction() {
+    throw new Error();
+}
