@@ -3,7 +3,7 @@
     public static void Main(string[] args)
     {
         // // inline comments are created with the "//"
-        // /* or block comments can start and end with  the "/*" and */
+        /* or block comments can start and end with  the "/*" and */
 
         // // console refers to the terminal console, or the console window that .NET will create.
         // // we have .ReadLine and .WriteLine methods
@@ -85,21 +85,54 @@
         return coin;
     }
 
+/// <summary>
+/// Accept the players guess of heads or tails
+/// </summary>
+/// <returns>bool guess</returns>
     public static bool PlayerGuess()
     {
         // prompt the player to select heads or tails, and return true or false
         // accept a string for "heads" or "tails"
         // accept a numerical representation (1 or 0)
+        int userChoice = -1;
 
-        Console.WriteLine("Please select Heads or Tails:");
-        Console.WriteLine("[0] - Heads");
-        Console.WriteLine("[1] - Tails");
+        do
+        {
+            try
+            {
+                Console.WriteLine("Please select Heads or Tails:");
+                Console.WriteLine("[0] - Heads");
+                Console.WriteLine("[1] - Tails");
 
-        // With Console.ReadLine, everyting that is entered is a string. we need to convert if we want something else.
-        //string userInput = Console.ReadLine();
+                // With Console.ReadLine, everyting that is entered is a string. we need to convert if we want something else.
+                //string userInput = Console.ReadLine();
 
-        int userChoice = Int32.Parse(Console.ReadLine());
+                userChoice = Int32.Parse(Console.ReadLine());
+            }
+            catch(ArgumentNullException)
+            {
+                Console.WriteLine("You must enter a number to continue.");
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine("input must me an integer");
+            }
+            catch(OverflowException)
+            {
+                Console.WriteLine("Now that was just rediculous.");
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Unexpected Input, Please try again: ");
+            }
+            finally
+            {
+                Console.WriteLine("Continuing on...");
+            }
 
+        } while (userChoice != 1 || userChoice != 0);
+       
+       /*
         if (userChoice == 1 || userChoice == 0) // only a 1 or a 0 will enter the if statement
         {
             return (userChoice == 1)? true : false;
@@ -110,5 +143,8 @@
         }
 
         return false;
+        */
+
+        return (userChoice == 1)? true : false;
     }
 }
