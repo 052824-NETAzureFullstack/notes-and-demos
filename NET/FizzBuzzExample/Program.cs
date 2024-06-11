@@ -24,13 +24,17 @@ namespace FizzBuzz
                 //     Console.WriteLine("Buzz");
                 // }
 
-                if (i % 3 == 0) 
+                if (i % 3 == 0 && i % 5 == 0) 
                 {
-                    Console.WriteLine("Fizz");
+                    Console.WriteLine("FizzBuzz");
                 }
                 else if (i % 5 == 0)
                 {
                     Console.WriteLine("Buzz");
+                }
+                else if (i % 3 == 0 )
+                {
+                    Console.WriteLine("Fizz");
                 }
                 else
                 {
