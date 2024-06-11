@@ -42,12 +42,12 @@ namespace FizzBuzz
             string output = "";
             
             foreach(KeyValuePair<int, string> val in wordVals)
+            {
+                if (i % val.Key == 0 )
                 {
-                    if (i % val.Key == 0 )
-                    {
-                        output += val.Value;
-                    }
+                    output += val.Value;
                 }
+            }
 
             if (String.IsNullOrEmpty(output))
             {
