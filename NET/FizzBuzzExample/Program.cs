@@ -19,14 +19,24 @@ namespace FizzBuzz
             // a numbered loop, printing out the number in question on a new line.
             for ( int i = lower; i <= upper; i++)
             {
+                // if (i % 5 == 0)
+                // {
+                //     Console.WriteLine("Buzz");
+                // }
+
                 if (i % 3 == 0) 
                 {
                     Console.WriteLine("Fizz");
+                }
+                else if (i % 5 == 0)
+                {
+                    Console.WriteLine("Buzz");
                 }
                 else
                 {
                     Console.WriteLine(i);
                 }
+
             }
         }
     }
