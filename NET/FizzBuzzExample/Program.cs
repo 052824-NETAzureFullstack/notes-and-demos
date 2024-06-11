@@ -6,6 +6,12 @@ namespace FizzBuzz
     {
         public static void Main(string[] args)
         {
+            // Program Variables - modify these to change the associated words! (Don't touch anything else, or ELSE!)
+            int fizzVal = 4;
+            int buzzVal = 5;
+            int bangVal = 7;
+         
+         
             // Prompt the user to input the lower and upper values to play with
 
             Console.Write("Please enter a valid lower limit: ");
@@ -24,31 +30,31 @@ namespace FizzBuzz
                 //     Console.WriteLine("Buzz");
                 // }
 
-                if (i % 3 == 0 && i % 5 == 0 && i % 7 == 0) 
+                if (i % fizzVal == 0 && i % buzzVal == 0 && i % bangVal == 0) 
                 {
                     Console.WriteLine("FizzBuzzBang");
                 }
-                else if (i % 3 == 0 && i % 5 == 0) 
+                else if (i % fizzVal == 0 && i % buzzVal == 0) 
                 {
                     Console.WriteLine("FizzBuzz");
                 }
-                else if (i % 3 == 0 && i % 7 == 0) 
+                else if (i % fizzVal == 0 && i % bangVal == 0) 
                 {
                     Console.WriteLine("FizzBang");
                 }
-                else if (i % 5 == 0 && i % 7 == 0) 
+                else if (i % buzzVal == 0 && i % bangVal == 0) 
                 {
                     Console.WriteLine("BuzzBang");
                 }
-                else if (i % 3 == 0 )
+                else if (i % fizzVal == 0 )
                 {
                     Console.WriteLine("Fizz");
                 }
-                else if (i % 5 == 0)
+                else if (i % buzzVal == 0)
                 {
                     Console.WriteLine("Buzz");
                 }
-                else if (i % 7 == 0)
+                else if (i % bangVal == 0)
                 {
                     Console.WriteLine("Bang");
                 }
