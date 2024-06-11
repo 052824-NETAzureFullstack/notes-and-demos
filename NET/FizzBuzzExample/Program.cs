@@ -7,7 +7,7 @@ namespace FizzBuzz
         public static void Main(string[] args)
         {
             // Program Variables - modify these to change the associated words! (Don't touch anything else, or ELSE!)
-            int fizzVal = 4;
+            int fizzVal = 3;
             int buzzVal = 5;
             int bangVal = 7;
          
@@ -25,44 +25,29 @@ namespace FizzBuzz
             // a numbered loop, printing out the number in question on a new line.
             for ( int i = lower; i <= upper; i++)
             {
-                // if (i % 5 == 0)
-                // {
-                //     Console.WriteLine("Buzz");
-                // }
+                string output = "";
 
-                if (i % fizzVal == 0 && i % buzzVal == 0 && i % bangVal == 0) 
+                if (i % fizzVal == 0 )
                 {
-                    Console.WriteLine("FizzBuzzBang");
-                }
-                else if (i % fizzVal == 0 && i % buzzVal == 0) 
-                {
-                    Console.WriteLine("FizzBuzz");
-                }
-                else if (i % fizzVal == 0 && i % bangVal == 0) 
-                {
-                    Console.WriteLine("FizzBang");
-                }
-                else if (i % buzzVal == 0 && i % bangVal == 0) 
-                {
-                    Console.WriteLine("BuzzBang");
-                }
-                else if (i % fizzVal == 0 )
-                {
-                    Console.WriteLine("Fizz");
-                }
-                else if (i % buzzVal == 0)
-                {
-                    Console.WriteLine("Buzz");
-                }
-                else if (i % bangVal == 0)
-                {
-                    Console.WriteLine("Bang");
-                }
-                else
-                {
-                    Console.WriteLine(i);
+                    output = output + "Fizz";
                 }
 
+                if (i % buzzVal == 0)
+                {
+                    output = output + "Buzz";
+                }
+                
+                if (i % bangVal == 0)
+                {
+                    output = output + "Bang";
+                }
+
+                if (String.IsNullOrEmpty(output))
+                {
+                    output = output + i.ToString();
+                }
+
+                Console.WriteLine(output);                
             }
         }
     }
