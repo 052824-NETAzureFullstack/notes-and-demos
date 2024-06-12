@@ -11,7 +11,7 @@ namespace ToDo
             // List - dynamic arrays - items are referenced by index, add, remove, pop (remove items from the middle)
 
 
-            List<string> toDoList = new List<string>();
+            List<Task> toDoList = new List<Task>();
             bool repeat = true;
 
             while (repeat)
@@ -29,18 +29,25 @@ namespace ToDo
                     case 1:
                     {
                         Console.Clear();
-                        Console.WriteLine("Please enter your todo items: ");
-                        string todo = Console.ReadLine();
-                        toDoList.Add(todo);
+                        Console.WriteLine("Please enter your todo title: ");
+                        string title = Console.ReadLine();
+                        Console.WriteLine("Please enter your todo description: ");
+                        string description = Console.ReadLine();
+                        DateTime now = DateTime.Now;
+
+                        Task newTask = new Task(title, description, now);
+
+                        toDoList.Add(newTask);
                         break;
                     }
                     
                     case 2:
                     {         
                         Console.Clear();               
-                        foreach(string item in toDoList)       
+                        foreach(Task item in toDoList)       
                         {
-                            Console.WriteLine(item);
+                            Console.WriteLine("{0} - {1}", item.title, item.dueDate);
+                            Console.WriteLine("\t" + item.description);
                         } 
                         Console.ReadLine();
                         break; 
