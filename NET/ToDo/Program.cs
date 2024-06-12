@@ -10,7 +10,6 @@ namespace ToDo
             // Arrays - can be multi-dimensional - items are referenced by index position(s) - immutable in size.
             // List - dynamic arrays - items are referenced by index, add, remove, pop (remove items from the middle)
 
-
             List<Task> toDoList = new List<Task>();
             bool repeat = true;
 
@@ -66,7 +65,19 @@ namespace ToDo
                             Console.WriteLine("[{0}] - {1}", i, toDoList[i].title);
                         }
 
-                        int index = int.Parse(Console.ReadLine());
+                        int index = -1;
+                        bool unparsed = true;
+
+                        while (unparsed)
+                        {
+                            unparsed = !int.TryParse(Console.ReadLine(), out index);
+                            if (-1 >= index  || index >= toDoList.Count)
+                            // -4, -3, -2, -1 > 0, 1, 2, 3, < toDoList.count
+                            {
+                                unparsed = true;
+                            }
+                        }
+
                         toDoList[index].completed = true;
 
                         Console.WriteLine("Task completed! Keep up the good work!");
