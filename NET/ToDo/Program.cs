@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
+
 namespace ToDo
 {
     public class Program
@@ -12,6 +15,9 @@ namespace ToDo
 
             List<Task> toDoList = new List<Task>();
             bool repeat = true;
+            string path = @"./ToDoList.txt";
+
+            toDoList = ReadFile(path);
 
             while (repeat)
             {
@@ -22,6 +28,7 @@ namespace ToDo
                 Console.WriteLine("[3] - Complete a to-do from the list");
                 Console.WriteLine("[4] - Display all to-do tasks.");
                 Console.WriteLine("[0] - Exit the app");
+
                 int selection = int.Parse(Console.ReadLine());
 
                 switch (selection)
@@ -100,6 +107,7 @@ namespace ToDo
                     case 0: // Exit
                     {
                         repeat = false;
+                        WriteFile(path, toDoList);
                         break;
                     }
                 }
@@ -107,5 +115,34 @@ namespace ToDo
 
             Console.WriteLine("Exiting...");                
         } 
+
+        public static List<Task> ReadFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                return JsonSerializer.Deserialize<List<Task>>(File.ReadAllText(path));
+            }
+            else
+            {
+                Console.WriteLine("File not found!");
+                Console.ReadLine();
+            }
+            return null;
+        }
+
+        public static void WriteFile(string path, List<Task> toDoList)
+        {
+            string json = JsonSerializer.Serialize(toDoList);
+            File.WriteAllText(path, json);
+
+            // if(File.Exists(path))
+            // {
+            //     File.AppendAllText(path, text);
+            // }
+            // else
+            // {
+            //     File.WriteAllText(path, text);
+            // }
+        }
     }
 }
