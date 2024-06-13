@@ -1,0 +1,117 @@
+[
+    {
+      "gameWord": "CLASS",
+      "hint": "Blueprint for creating objects (like a cookie cutter)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "OBJECT",
+      "hint": "Instance of a class with data and behavior (a specific cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "ATTRIBUTE",
+      "hint": "Data associated with an object (color or chip type in a cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "METHOD",
+      "hint": "Action an object can perform (like eating the cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "INHERITANCE",
+      "hint": "Creating a new class based on an existing one (Chocolate Chip Cookie inherits from Cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "POLYMORPHISM",
+      "hint": "Objects respond differently to same message (different shapes fitting in a cookie jar)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "ENCAPSULATION",
+      "hint": "Bundling data and methods together (cookie recipe and baking instructions)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "ABSTRACTION",
+      "hint": "Focusing on essentials and hiding complexity (enjoying the cookie without needing the recipe)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "C#",
+      "hint": "Programming language similar to English for computers (instructions for making the cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "ASP.NET",
+      "hint": "Helps build websites and applications (pre-made oven for baking cookies)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": ".NET FRAMEWORK",
+      "hint": "Large collection of tools for building .NET applications (a whole kitchen full of baking tools)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": ".NET CORE",
+      "hint": "Lightweight version of the .NET Framework (portable countertop oven for occasional baking)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "CLR",
+      "hint": "Manages how .NET code runs (the heat source that bakes the cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "VISUAL STUDIO",
+      "hint": "Tool for writing and managing .NET code (mixing bowl, whisk, and other tools)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "LINQ",
+      "hint": "Easy way to work with data (a recipe that's easy to follow)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "COMPONENT",
+      "hint": "Reusable building block for user interfaces (pre-made cookie dough ball)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "DIRECTIVE",
+      "hint": "Adds special behavior to HTML elements (adding chocolate chips to dough)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "SERVICE",
+      "hint": "Provides functionality shared across the application (preheating the oven)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "MODULE",
+      "hint": "Organizes components, directives, and services (the entire cookie recipe with all its parts)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "TYPESCRIPT",
+      "hint": "Superset of JavaScript for Angular applications (fancy measuring cup for baking)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "DEPENDENCY INJECTION",
+      "hint": "Way to provide objects to other objects (oven providing heat for baking)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "ROUTING",
+      "hint": "Defines how users navigate the application (steps from ingredients to finished cookie)",
+      "displayWord": ""
+    },
+    {
+      "gameWord": "TEMPLATE",
+      "hint": "Defines the structure and layout of a component's UI (the shape of the cookie cutter)",
+      "displayWord": ""
+    }
+]

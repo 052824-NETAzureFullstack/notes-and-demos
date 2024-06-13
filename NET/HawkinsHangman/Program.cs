@@ -1,7 +1,16 @@
 ﻿using System;
+using System.Text.Json;
+using System.IO;
 
 namespace HawkinsHangman
 {
+    public record GameWord
+    {
+        public string gameWord { get; set; } = "";
+        public string displayWord { get; set; } = "";
+        public string hint { get; set; } = "";
+    }
+
     public class Program
     {
         /// <summary>
@@ -32,34 +41,41 @@ namespace HawkinsHangman
             List<char> previousGuesses = [];
 
             // Select a new word for the game
-            string gameWord = "POWERSHELL";
+            GameWord word = NewWord();
 
             // Hide the letters in the word
-            string displayWord = HideLetters(gameWord);
+            word = HideLetters(word);
             
-
             // Loop for display here
             do
             {
+                Console.Clear();
+                DisplayBoard(word, previousGuesses);
                 // check if the puzzle is solved
-                if (displayWord == gameWord)
+                if (word.displayWord == word.gameWord)
                 {
                     solved = true;
+                    Console.WriteLine("Congratulations, you guessed the word!");
                 }
                 else
                 {
-                    Console.Clear();
-
-                    DisplayBoard(displayWord, previousGuesses);
-
                     // Prompt and accept a player guess
                     Console.Write("Please make a guess: ");
 
                     previousGuesses = GuessLetter(previousGuesses);
 
-                    displayWord = CheckGuesses(gameWord, displayWord, previousGuesses);
+                    word.displayWord = CheckGuesses(word, previousGuesses);
                 }
             } while (!solved);
+        }
+
+        public static GameWord NewWord()
+        {
+            string path = @"./words.json";
+            string json = File.ReadAllText(path);
+            List<GameWord> words = JsonSerializer.Deserialize<List<GameWord>>(json);
+            Random rand = new Random();
+            return words[rand.Next(words.Count)];
         }
 
         /// <summary>
@@ -67,14 +83,14 @@ namespace HawkinsHangman
         /// </summary>
         /// <param name="gameWord">string</param>
         /// <returns name="hiddenWord">string</returns>
-        public static string HideLetters(string gameWord)
+        public static GameWord HideLetters(GameWord word)
         {
-            string hiddenWord = "";
-            foreach (char letter in gameWord)
+            word.displayWord = "";
+            foreach (char letter in word.gameWord)
             {
-                hiddenWord += "_";
+                word.displayWord += "_";
             }
-            return hiddenWord;
+            return word;
         }
 
         /// <summary>
@@ -83,22 +99,32 @@ namespace HawkinsHangman
         /// <param name="previousGuesses"></param>
         /// <returns></returns>
         public static List<char> GuessLetter(List<char> previousGuesses)
-        {
-            
-            char guess = Console.ReadLine().ToUpper()[0];
+        { 
+            string? inputString = inputString = Console.ReadLine().ToUpper();
 
-            // Needs Validation!
-
-            // Add the current guess to the previously guessed letters
-            previousGuesses.Add(guess);
-
+            if (String.IsNullOrEmpty(inputString))
+            {
+                Console.WriteLine("Invalid guess: you didn't enter anything.");
+                Console.ReadLine();
+            }
+            else if (previousGuesses.Contains(inputString[0]))
+            {
+                Console.WriteLine("Invalid guess: you've already tried that one.");
+                Console.ReadLine();
+            }
+            else
+            {
+                previousGuesses.Add(inputString[0]);
+            }
+        
             return previousGuesses;
         }
 
-        public static void DisplayBoard(string displayWord, List<char> previousGuesses)
+        public static void DisplayBoard(GameWord word, List<char> previousGuesses)
         {
+            Console.WriteLine(word.hint + "\n");
             // Display the hidden word
-            Console.Write(displayWord + "\t\t");
+            Console.Write(word.displayWord + "\t\t");
 
             // Display previously guessed letters
             foreach (char letter in previousGuesses)
@@ -108,17 +134,19 @@ namespace HawkinsHangman
             Console.WriteLine();
         }
 
-        public static string CheckGuesses(string gameWord, string displayWord, List<char> previousGuesses)
+        public static string CheckGuesses(GameWord word, List<char> previousGuesses)
         {                   
-            Console.WriteLine(displayWord);
-            char[] dW = displayWord.ToCharArray();
+            Console.WriteLine(word.displayWord);
+            char[] dW = word.displayWord.ToCharArray();
 
-            foreach(char letter in previousGuesses)
+            foreach (char letter in previousGuesses)
             {
-                if (gameWord.Contains(letter))
+                for (int i = 0; i < word.gameWord.Length; i++)
                 {
-                    int index = gameWord.IndexOf(letter);
-                    dW[index] = letter;
+                    if (letter == word.gameWord[i])
+                    {
+                        dW[i] = letter;
+                    }
                 }
             }
             return new string(dW);
