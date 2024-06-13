@@ -1,3 +1,2 @@
 This is a simple text file
-Now we're making some changes
 and now we've got some other changes
