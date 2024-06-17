@@ -63,3 +63,43 @@ SELECT CustomerId, SUM(Total) AS Sum_Total
 -- HAVING
 -- SELECT
 -- ORDER BY
+
+
+-- JOINS - joins are way to retrieve information/entries that are related from across multiple tables
+-- Multiplicity - the relationships between tables
+-- all relationships in a database are based on the keys - primary and foreign
+-- 1 to 1 - for every entry on table A, there is one and only one related entry on table B
+-- 1 to many - for every entry on table A, there are one or many related entries on table B
+-- many to many - for many entries on table A there, there are many related entries on table B
+
+/*
+1 to 1
+
+1 - Z
+2 - Y
+3 - W
+4 - X
+
+1 to many
+1 - A, Z
+2 - B, Y
+3 - C, W
+4 - D, X
+
+many to many 
+Table A, Table B
+1, 9 - A, Z
+2, 8 - B, Y
+3, 7 - C, W
+4, 6 - D, X
+
+Table A - Table C - Table B
+many    to  one, one   to   many
+Table C is the Linking Table
+
+
+JOIN statements have several flavors:
+INNER
+OUTER
+Left/Right
+CROSS

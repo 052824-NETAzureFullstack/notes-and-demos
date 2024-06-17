@@ -1,30 +1,109 @@
 -- On the Chinook DB, practice writing queries with the following exercises
+USE MyDatabase;
+GO
 
 -- List all customers (full name, customer id, and country) who are not in the USA
+SELECT FirstName + ' ' + LastName AS FullName, CustomerId, Country 
+    FROM [Customer] 
+    WHERE country != 'USA';
+
+    -- Select, From, Where, String Concatenation with an Alias (AS)
+     
+--  Interesting.
+
 
 -- List all customers from Brazil
+SELECT * FROM Customer 
+    Where Country = 'Brazil';
+    -- remember that strings (VARCHAR) are single quotes!
+
 
 -- List all sales agents
+SELECT * 
+    FROM Employee
+    WHERE Title LIKE 'Sales%';
+
+    -- use the LIKE keyword with the WHERE filtering keyword to perform a similarity search
+
 
 -- Retrieve a list of all countries in billing addresses on invoices
+SELECT BillingCountry
+    FROM Invoice
+    GROUP BY BillingCountry;
+
+    -- GROUP BY to aggregate the results into categories.
+
 
 -- Retrieve how many invoices there were in 2009, and what was the sales total for that year?
     -- (challenge: find the invoice count sales total for every year using one query)
+SELECT COUNT(*) AS InvoiceCount, SUM(Total) AS InvoiceTotal FROM INVOICE
+    WHERE YEAR(InvoiceDate) = 2009;
+    
+-- invoiceDate (need to extract just the year?)
+
+    -- COUNT and SUM to aggregate data from a table
+    -- use AS to alias a column
+    -- use YEAR/MONTH/DAY to retrieve a value from a DATETIME
+
 
 -- how many line items were there for invoice #37
+SELECT COUNT(InvoiceLineID) AS InvoiceLines FROM InvoiceLine WHere InvoiceID = 37; 
 
--- how many invoices per country?
+
+-- SELECT COUNT(InvoiceLineID) FROM InvoiceLine WHere InvoiceID = 37; (This works too)
+-- SELECT COUNT(*) FROM InvoiceLine WHere InvoiceID = 37; (This works too)
+
+
+-- how many invoices per country? BillingCountry  # of invoices -
+SELECT COUNT(InvoiceId) As InvoiceIdCount, BillingCountry FROM Invoice GROUP BY BillingCountry;
+
 
 -- Retrieve the total sales per country, ordered by the highest total sales first.
+SELECT SUM(Total) AS countrySales, BillingCountry FROM Invoice GROUP BY BillingCountry Order By countrySales DESC;
+
+    --aggregate function with SUM()
+    --GROUP By to aggregate the BillingCountry
+    -- ORDER BY to sort and order the results based on total sales
 
 
 
 -- JOINS CHALLENGES
+-- Every Album by Artist
+SELECT Title As AlbumTitle, Name AS ArtistName 
+    FROM Album 
+        INNER JOIN Artist ON Album.ArtistID = Artist.ArtistID;
+                            --  Foreign Key         Primary Key
+
+-- All songs of the rock genre
+SELECT T.Name AS Track_Name, AR.Name AS Artist_Name
+    FROM Track AS T
+        INNER JOIN Genre AS G ON G.GenreId = T.GenreId
+        JOIN Album AS AL ON T.AlbumId = AL.AlbumId -- Track to Album
+        JOIN Artist AS AR ON AL.ArtistId = AR.ArtistId -- Album to Artist
+    WHERE G.Name = 'Rock';
+
+
 -- Show all invoices of customers from brazil (mailing address not billing)
+SELECT InvoiceId AS ID, InvoiceDate, FirstName AS CustomerName
+    FROM Invoice
+        JOIN Customer ON Customer.CustomerId = Invoice.CustomerId
+        WHERE Customer.Country = 'Brazil';
+
+-- Tables used: Invoice and Customer?
+-- Customer - CustomerId (possible join on), Country
+-- Invoice - CustomerId
+
 
 -- Show all invoices together with the name of the sales agent for each one
-
+Select Employee.FirstName + ' ' + Employee.LastName AS SalesAgent, Invoice.InvoiceId
+    FROM Invoice
+        Join Customer ON Invoice.CustomerId = Customer.CustomerId
+        Join Employee ON Employee.EmployeeId = Customer.SupportRepID; 
+ 
+-- Invoice.CustomerId -> Customer -> Employee
+-- InvoiceID, Employee ID, name:   EmployeeID, SupportRepID
 -- Show all playlists ordered by the total number of tracks they have
+
 
 -- Which sales agent made the most sales in 2009?
 
