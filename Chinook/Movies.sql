@@ -7,6 +7,7 @@
         -- Schemas - logical separation
             -- Tables - organization of data
 
+/*
 CREATE DATABASE MovieDB;
 GO
 
@@ -31,6 +32,7 @@ GO
 -- Drop removes the entire structure from the memory
 DROP TABLE Movie.Movie;
 GO
+*/
 
 /*
 -- Constraints
@@ -59,6 +61,9 @@ GO
 */
 
 CREATE DATABASE MovieDB;
+GO
+
+USE MovieDB;
 GO
 
 CREATE SCHEMA Movie;
@@ -102,7 +107,7 @@ CREATE TABLE Movie.Actor(
     ActorId INT IDENTITY PRIMARY KEY,
     FirstName NVARCHAR(100) NOT NULL,
     LastName NVARCHAR(100) NOT NULL,
-    CONSTRAINT U_FirstNamr_LastName UNIQUE (FirstName, LastName)
+    CONSTRAINT U_FirstName_LastName UNIQUE (FirstName, LastName)
 );
 GO
 
@@ -118,8 +123,75 @@ CREATE TABLE Movie.ActorMovie(
 );
 GO
 
+/*
+    Actor           Actor/Movie         Movie
+    1               1   /   2           1
+    2               1   /   3           2
+    3               2   /   3           3
+    4               4   /   4           4
+*/
 
 SELECT * FROM Movie.Movie;
 SELECT * FROM Movie.Genre;
 SELECT * FROM Movie.Actor;
 SELECT * FROM Movie.ActorMovie;
+GO
+
+-- DML Data Manipulation Language 
+-- INSERT, UPDATE, DELETE
+
+INSERT INTO Movie.Genre (Name) VALUES
+    ('Action'),
+    ('Drama'),
+    ('Mystery'),
+    ('Comedy');
+GO
+
+INSERT INTO Movie.Movie (Title, ReleaseDate, GenreId) VALUES
+    ('Avengers: Endgame', '2019', (SELECT GenreId FROM Movie.Genre WHERE Name = 'Action')),
+    ('Joker', '2019', 2),
+    ('Citizen Kane', '1941', 3);
+GO
+
+INSERT INTO Movie.Actor (FirstName, LastName) VALUES
+    ('David', 'Tennant'),
+    ('Sean', 'Connery'),
+    ('Scarlet', 'Johansen'),
+    ('Robert', 'Downey'),
+    ('Robert', 'De Niro'),
+    ('Joaquin', 'Phoenix'),
+    ('Chris', 'Evans'),
+    ('Chris', 'Hemsworth');
+GO
+
+INSERT INTO Movie.ActorMovie (MovieId, ActorId) VALUES
+    ((SELECT MovieId FROM Movie.Movie WHERE Title = 'Avengers: Endgame'),(SELECT ActorId FROM Movie.Actor WHERE FirstName = 'Chris' AND LastName = 'Evans')),
+    (2,8),
+    (2,4),
+    (2,3),
+    (3,6),
+    (3,5),
+    (3,1),
+    (3,2),
+    (2,1),
+    (2,5);
+GO
+
+SELECT M.Title, A.FirstName + ' ' + A.LastName AS 'Actor Name'
+    FROM Movie.Movie AS M
+        JOIN Movie.ActorMovie AS AM ON AM.MovieId = M.MovieId
+        JOIN Movie.Actor AS A ON AM.ActorId = A.ActorId
+        ORDER BY M.Title;
+GO
+
+UPDATE Movie.Movie
+    SET Title = 'Endgame' -- SET will act on EVERY matching field
+    WHERE Title = 'Avengers: Endgame'; -- Use WHERE to filter to a specific entry or set of entries
+GO
+
+DELETE FROM Movie.ActorMovie -- DELETE will work similarly to UPDATE, deleting the data of a table 
+    WHERE Id = 14;
+GO
+
+TRUNCATE TABLE Movie.ActorMovie; -- empties the rows (entries)
+GO
