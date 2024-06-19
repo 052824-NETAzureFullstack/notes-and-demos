@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hello_EF.Migrations
 {
     [DbContext(typeof(PetContext))]
-    partial class PetContextModelSnapshot : ModelSnapshot
+    [Migration("20240619191105_Pet_Species")]
+    partial class Pet_Species
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,38 +22,6 @@ namespace Hello_EF.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Owner", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Owners");
-                });
-
-            modelBuilder.Entity("OwnerPet", b =>
-                {
-                    b.Property<int>("OwnedPetID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PetOwnersID")
-                        .HasColumnType("int");
-
-                    b.HasKey("OwnedPetID", "PetOwnersID");
-
-                    b.HasIndex("PetOwnersID");
-
-                    b.ToTable("OwnerPet");
-                });
 
             modelBuilder.Entity("Pet", b =>
                 {
@@ -92,21 +63,6 @@ namespace Hello_EF.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Species");
-                });
-
-            modelBuilder.Entity("OwnerPet", b =>
-                {
-                    b.HasOne("Pet", null)
-                        .WithMany()
-                        .HasForeignKey("OwnedPetID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Owner", null)
-                        .WithMany()
-                        .HasForeignKey("PetOwnersID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Pet", b =>
