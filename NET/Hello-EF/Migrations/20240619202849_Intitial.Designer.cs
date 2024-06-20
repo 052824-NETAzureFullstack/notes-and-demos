@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hello_EF.Migrations
 {
-    [DbContext(typeof(PetContext))]
-    [Migration("20240619191742_OwnerTable")]
-    partial class OwnerTable
+    [DbContext(typeof(DataContext))]
+    [Migration("20240619202849_Intitial")]
+    partial class Intitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,26 @@ namespace Hello_EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("Owners");
+                });
+
+            modelBuilder.Entity("OwnerPet", b =>
+                {
+                    b.Property<int>("OwnedPetID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetOwnersID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OwnedPetID", "PetOwnersID");
+
+                    b.HasIndex("PetOwnersID");
+
+                    b.ToTable("OwnerPet");
                 });
 
             modelBuilder.Entity("Pet", b =>
@@ -49,22 +63,16 @@ namespace Hello_EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("Cuteness")
+                    b.Property<int?>("Cuteness")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OwnerID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PetSpeciesID")
+                    b.Property<int?>("PetSpeciesID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("OwnerID");
 
                     b.HasIndex("PetSpeciesID");
 
@@ -80,7 +88,6 @@ namespace Hello_EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("SpeciesName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -88,24 +95,28 @@ namespace Hello_EF.Migrations
                     b.ToTable("Species");
                 });
 
-            modelBuilder.Entity("Pet", b =>
+            modelBuilder.Entity("OwnerPet", b =>
                 {
-                    b.HasOne("Owner", null)
-                        .WithMany("OwnedPet")
-                        .HasForeignKey("OwnerID");
-
-                    b.HasOne("Species", "PetSpecies")
+                    b.HasOne("Pet", null)
                         .WithMany()
-                        .HasForeignKey("PetSpeciesID")
+                        .HasForeignKey("OwnedPetID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PetSpecies");
+                    b.HasOne("Owner", null)
+                        .WithMany()
+                        .HasForeignKey("PetOwnersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Owner", b =>
+            modelBuilder.Entity("Pet", b =>
                 {
-                    b.Navigation("OwnedPet");
+                    b.HasOne("Species", "PetSpecies")
+                        .WithMany()
+                        .HasForeignKey("PetSpeciesID");
+
+                    b.Navigation("PetSpecies");
                 });
 #pragma warning restore 612, 618
         }
