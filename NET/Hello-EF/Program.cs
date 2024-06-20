@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +13,21 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 var app = builder.Build();
 
+// Test the api with a "hello world"
+// https://localhost:xxxx
 app.MapGet("/", () => "Hello World!");
 
-// Get All the pets!
+//CRUD - Create, Read, Update, Delete
+// HTTP - POST, GET, PUT, DETELE
+
+// GET All the pets!
 // https://localhost:xxxx/pets
 app.MapGet("/pets", (PetService pets) =>
 {
     return PetService.Pets;
 });
 
-// Get a specific pet?
+// GET a specific pet?
 // https://localhost:xxxx/pets/{id}
 app.MapGet("/pets/{id}", (PetService pets, int id) =>
 {
@@ -33,9 +39,65 @@ app.MapGet("/pets/{id}", (PetService pets, int id) =>
     return found;
 });
 
+// Database test
+// https://localhost:xxxx/db
 app.MapGet("/db", async (PetService pets) =>
 {
     await pets.TestDbAsync();
+});
+
+// GET does not include a body!!
+// DELETE does not include a body!!!
+// POST and PUT will have a body, and we can place an object (in serialized form!) in the body
+
+// POST a new pet (includes the new pet object?)
+// https://localhost:xxxx/pets
+app.MapPost("/pets", (PetService pets, [FromBody] Pet newPet) =>
+{
+    PetService.Pets.Add(newPet);
+    return PetService.Pets;
+});
+
+// PUT an update on a pet
+// https://locahost:xxxx/pets/{id}
+app.MapPut("/pets/{id}", async (int id, Pet updatePet, PetService pets) =>
+{
+    if (PetService.Pets.Exists(x => x.ID == id))
+    {
+        int i = PetService.Pets.FindIndex(x => x.ID == id);
+
+        PetService.Pets[i] = updatePet;
+        return Results.Ok(PetService.Pets.Find(x => x.ID == updatePet.ID));
+    }
+    return Results.NotFound();
+});
+
+// DELETE a pet by id
+// https://localhost:xxxx/pets/{id}
+app.MapDelete("/pets/{id}", (int id, PetService pets) =>
+{
+    if (PetService.Pets.Exists(x => x.ID == id))
+    {
+        Pet toDelete = PetService.Pets.Find(x => x.ID == id);
+
+        return (PetService.Pets.Remove(toDelete)) ? Results.NoContent() : Results.NotFound();
+    }
+    return Results.NotFound();
+});
+
+// DELETE a pet by body
+// https://localhost:xxxx/pets/
+app.MapDelete("/pets/b", ([FromBody] Pet toDelete, [FromServices] PetService pets) =>
+{
+    return (PetService.Pets.Remove(toDelete)) ? Results.NoContent() : Results.NotFound();
+});
+
+// DELETE ALL PETS!!!
+// https://localhost:xxxx/pets
+app.MapDelete("/pets", (PetService pets) => 
+{
+    PetService.Pets.Clear();
+    return Results.Ok();
 });
 
 app.Run();
