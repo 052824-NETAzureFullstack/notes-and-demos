@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddTransient<PetService>();
+builder.Services.AddScoped<PetService>();
 
 string? connectionString = builder.Configuration.GetConnectionString("Docker");
 
@@ -17,33 +17,28 @@ var app = builder.Build();
 // https://localhost:xxxx
 app.MapGet("/", () => "Hello World!");
 
-//CRUD - Create, Read, Update, Delete
-// HTTP - POST, GET, PUT, DETELE
-
-// GET All the pets!
-// https://localhost:xxxx/pets
-app.MapGet("/pets", (PetService pets) =>
-{
-    return PetService.Pets;
-});
-
-// GET a specific pet?
-// https://localhost:xxxx/pets/{id}
-app.MapGet("/pets/{id}", (PetService pets, int id) =>
-{
-    //Linq to find the entry we want!
-    var found = 
-        from i in PetService.Pets
-        where i.ID == id
-        select i;
-    return found;
-});
-
 // Database test
 // https://localhost:xxxx/db
 app.MapGet("/db", async (PetService pets) =>
 {
     await pets.TestDbAsync();
+});
+
+//CRUD - Create, Read, Update, Delete
+// HTTP - POST, GET, PUT, DETELE
+
+// GET All the pets!
+// https://localhost:xxxx/pets
+app.MapGet("/pets", async (PetService pets) =>
+{
+    return await pets._context.Pets.ToListAsync();
+});
+
+// GET a specific pet?
+// https://localhost:xxxx/pets/{id}
+app.MapGet("/pets/{id}", async (PetService pets, int id) =>
+{
+    return await pets._context.Pets.FindAsync(id);
 });
 
 // GET does not include a body!!
@@ -52,51 +47,60 @@ app.MapGet("/db", async (PetService pets) =>
 
 // POST a new pet (includes the new pet object?)
 // https://localhost:xxxx/pets
-app.MapPost("/pets", (PetService pets, [FromBody] Pet newPet) =>
+app.MapPost("/pets", async (PetService pets, [FromBody] Pet newPet) =>
 {
-    PetService.Pets.Add(newPet);
-    return PetService.Pets;
+    pets._context.Pets.Add(newPet);
+    await pets._context.SaveChangesAsync();
+    return await pets._context.Pets.ToListAsync();
 });
 
 // PUT an update on a pet
 // https://locahost:xxxx/pets/{id}
 app.MapPut("/pets/{id}", async (int id, Pet updatePet, PetService pets) =>
 {
-    if (PetService.Pets.Exists(x => x.ID == id))
-    {
-        int i = PetService.Pets.FindIndex(x => x.ID == id);
+    var pet = await pets._context.Pets.FindAsync(id);
+    if (pet == null)
+        return Results.NotFound();
 
-        PetService.Pets[i] = updatePet;
-        return Results.Ok(PetService.Pets.Find(x => x.ID == updatePet.ID));
-    }
-    return Results.NotFound();
+    pet.Name = updatePet.Name;
+    pet.PetSpecies = updatePet.PetSpecies;
+    pet.PetOwners = updatePet.PetOwners;
+
+    await pets._context.SaveChangesAsync();
+    return Results.Ok( await pets._context.Pets.ToListAsync());
 });
 
 // DELETE a pet by id
 // https://localhost:xxxx/pets/{id}
-app.MapDelete("/pets/{id}", (int id, PetService pets) =>
+app.MapDelete("/pets/{id}", async (int id, PetService pets) =>
 {
-    if (PetService.Pets.Exists(x => x.ID == id))
-    {
-        Pet toDelete = PetService.Pets.Find(x => x.ID == id);
+    var pet = await pets._context.Pets.FindAsync(id);
+    if (pet == null)
+        return Results.NotFound();
 
-        return (PetService.Pets.Remove(toDelete)) ? Results.NoContent() : Results.NotFound();
-    }
-    return Results.NotFound();
+    pets._context.Pets.Remove(pet);
+    await pets._context.SaveChangesAsync();
+    return Results.NoContent();
 });
 
 // DELETE a pet by body
 // https://localhost:xxxx/pets/
-app.MapDelete("/pets/b", ([FromBody] Pet toDelete, [FromServices] PetService pets) =>
-{
-    return (PetService.Pets.Remove(toDelete)) ? Results.NoContent() : Results.NotFound();
-});
+// app.MapDelete("/pets/b", ([FromBody] Pet toDelete, [FromServices] PetService pets) =>
+// {
+//     return (PetService.Pets.Remove(toDelete)) ? Results.NoContent() : Results.NotFound();
+// });
 
 // DELETE ALL PETS!!!
 // https://localhost:xxxx/pets
-app.MapDelete("/pets", (PetService pets) => 
+app.MapDelete("/pets", async (PetService pets) => 
 {
-    PetService.Pets.Clear();
+    List<Pet> petList = await pets._context.Pets.ToListAsync();
+    foreach (var pet in petList)
+    {
+        pets._context.Pets.Remove(pet);
+    }
+
+    await pets._context.SaveChangesAsync();
     return Results.Ok();
 });
 
@@ -105,21 +109,21 @@ app.Run();
 class PetService
 {
     // Fields
-    private readonly DataContext _context;
+    public readonly DataContext _context;
 
-    static Pet Sil = new Pet{ID = 1, Name= "Sil", Cuteness = 5, PetSpecies = new Species{
-            ID = 1, SpeciesName = "Cat"},
-        PetOwners = new List<Owner>()};
-    static Pet Claude = new Pet{ID = 2, Name= "Claude", Cuteness = 9, PetSpecies = new Species{
-            ID = 2, SpeciesName = "Hedgehog"},
-        PetOwners = new List<Owner>()};
+    // static Pet Sil = new Pet{ID = 1, Name= "Sil", Cuteness = 5, PetSpecies = new Species{
+    //         ID = 1, SpeciesName = "Cat"},
+    //     PetOwners = new List<Owner>()};
+    // static Pet Claude = new Pet{ID = 2, Name= "Claude", Cuteness = 9, PetSpecies = new Species{
+    //         ID = 2, SpeciesName = "Hedgehog"},
+    //     PetOwners = new List<Owner>()};
 
-    public static List<Pet> Pets { get; set; } = new List<Pet>{Sil, Claude};
+    // public static List<Pet> Pets { get; set; } = new List<Pet>{Sil, Claude};
 
     // Constructor
     public PetService(DataContext? context)
     {
-        this._context = context;
+        this._context = context ?? throw new Exception();
     }
 
     public async Task TestDbAsync()
