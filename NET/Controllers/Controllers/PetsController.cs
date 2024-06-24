@@ -21,6 +21,9 @@ namespace Controllers.Controller
         // GET: api/<PetsController>
         [HttpGet]
         public async Task<ActionResult<List<Pet>>> Get()
+        // async/await - no clue how long this will take...
+        // Task<T> = bool<t> is it done yet?
+        // ActionResult<T> -> HTTP Response wrapping response content
         {
             // Instantiate the list...
             List<Pet> petsList = new List<Pet>();
@@ -30,6 +33,8 @@ namespace Controllers.Controller
 
             // return the list, wrapped by a 200 http response code
             return Ok(petsList); //200 OK
+            // ActionResult.Ok();
+            // return petsList;
         }
 
         // GET api/<PetsController>/5
