@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using MusicAPI.Data;
 
-namespace MusicAPI;
+namespace MusicAPI.App;
 
 public class Program
 {
@@ -14,6 +16,12 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // Add Database Context for EF Core
+        builder.Services.AddDbContext<DataContext>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Dev"));
+        });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -26,7 +34,6 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
 
         app.MapControllers();
 
