@@ -11,7 +11,7 @@
 
 ## Objects
 ### SPA
-- Music
+- Song
     - ID - int
     - Title - string
     - Artist/Composer - List<string>
@@ -21,28 +21,21 @@
     - Tempo - int
 
 ### API 
-- Music
+- Song
     - ID - int
     - Title - String
     - Artist/Composer - List<artist>
     - Resource URL - String
-    - Ratings - List<Rating>
-    - Rating - double (calculated from Ratings)
+    - TotalRating - int
+    - RatingCount - int
+    - AverageRating - double (calculated from Ratings)
     - Genre - Genre
-    - Tempo - Tempo
+    - Tempo - int
 
 - Artist
     - ID - int
     - Name - String
 
-- Rating
-    - ID - int
-    - Rating - int
-
 - Genre
     - ID - int
     - Name - String
-
-- Tempo
-    - ID - int
-    - BPM - int

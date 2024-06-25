@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicAPI.Data;
 
@@ -10,9 +11,11 @@ using MusicAPI.Data;
 namespace MusicAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240625151441_UpdateArtist")]
+    partial class UpdateArtist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,13 +128,11 @@ namespace MusicAPI.Migrations
 
             modelBuilder.Entity("MusicAPI.Models.Song", b =>
                 {
-                    b.HasOne("MusicAPI.Models.Genre", "Genre")
+                    b.HasOne("MusicAPI.Models.Genre", null)
                         .WithMany("Song")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("MusicAPI.Models.Genre", b =>
