@@ -1,0 +1,5 @@
+@for(song of songList; track song.id){
+    <ul>
+        <li><a [routerLink] = "['/song', song.id]"><button>Title: {{ song.title }} </button></a></li>
+    </ul>
+}
