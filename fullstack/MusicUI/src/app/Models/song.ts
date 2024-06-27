@@ -5,7 +5,7 @@ export interface Song {
     id: number;
     title: string;
     url: string;
-    artists: Artist;
+    artists: Artist[];
     ratingCount: number;
     totalRating: number;
     averageRating: number;

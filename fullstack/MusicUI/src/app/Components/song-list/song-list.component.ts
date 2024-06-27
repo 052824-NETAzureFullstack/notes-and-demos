@@ -15,20 +15,24 @@ import { Song } from '../../Models/song';
   styleUrl: './song-list.component.css'
 })
 export class SongListComponent {
-  private songService = inject(SongService);
-  public songs$ = this.songService.GetSongs();
   public songList: Song[] = [];
 
+  constructor(private songService: SongService) {}
+
   ngOnInit(): void {
-    this.songs$.subscribe( data => {this.songList = data;});
+    this.songService.GetSongs().subscribe( data => {
+      this.songList = data;
+    });
   }
 
-  deleteSong(id: number ) {
-    this.songService.Delete(id).subscribe( result => {
+  deleteSong(song: Song ) {
+    let result = this.songService.Delete(song.id).subscribe( result => {
         console.log(result);
-      });
-  }
-  ngOnChange() {
-    this.songService.GetSongs().subscribe( data => {this.songList = data;});
+    });
+
+    if (result) {
+      this.songList.splice(this.songList.indexOf(song),1);
+    }
   }
 }
+

@@ -1,6 +1,10 @@
 <ng-container *ngIf="currentSong$ | async as currentSong">
-    <p>Song Id: {{ currentSong.id }}</p>
-    <p>Song Title: {{ currentSong.title }}</p>
-    <p>AverageRating: {{ currentSong.averageRating }}</p>
+    <h3>{{ currentSong.title }}</h3>
+    <p>Average Rating: {{ currentSong.averageRating }}</p>
+    <p>Artists: </p>
+        <ul>
+            <li *ngFor="let artist of currentSong.artists"> {{ artist.name}} </li>
+        </ul>
+    <p>Genre: {{ currentSong.genre.name }}</p>
     <p>Tempo: {{ currentSong.tempo }}</p>
 </ng-container>
