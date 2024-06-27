@@ -1,1 +1,29 @@
-<p>add-song works!</p>
+<div>
+    <p>
+        <label for="title">Song Title: </label>
+    </p>
+    <input type="text" id="title" [(ngModel)]="song.title" placeholder="Song Title"/>
+
+    <p>
+        <label for="url">Song URL: </label>
+    </p>
+    <input type="text" id="url" [(ngModel)]="song.url" placeholder="Song URL"/>
+    
+    <p>
+        <label for="artist">Artist: </label>
+    </p>
+    <input type="text" id= "artist" [(ngModel)]="song.artists[0].name" placeholder="Artist Name"/>
+
+    <p>
+        <label for="genre">Genre: </label>
+    </p>
+    <input type="text" id= "genre" [(ngModel)]="song.genre.name" placeholder="Song Genre"/>    
+    
+    <p>
+        <label for="tempo">Song Tempo: </label>
+    </p>
+    <input type="number" id= "tempo" [(ngModel)]="song.tempo"/>
+    <br>
+    <br>
+    <button (click)="addSong()">Add New Song</button>
+</div>

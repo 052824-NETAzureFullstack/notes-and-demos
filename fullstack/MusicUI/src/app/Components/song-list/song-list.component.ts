@@ -22,4 +22,13 @@ export class SongListComponent {
   ngOnInit(): void {
     this.songs$.subscribe( data => {this.songList = data;});
   }
+
+  deleteSong(id: number ) {
+    this.songService.Delete(id).subscribe( result => {
+        console.log(result);
+      });
+  }
+  ngOnChange() {
+    this.songService.GetSongs().subscribe( data => {this.songList = data;});
+  }
 }

@@ -8,9 +8,21 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        var  CORSPolicy = "CORSPolicy";
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddCors( options =>
+        {
+            options.AddPolicy( name: CORSPolicy,
+                                policy => 
+                                {
+                                    policy.WithOrigins("http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                                });
+        });
 
         builder.Services.AddControllers().AddJsonOptions(options =>
         {
@@ -29,6 +41,8 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseCors(CORSPolicy);
+        
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
