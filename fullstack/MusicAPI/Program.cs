@@ -36,7 +36,7 @@ public class Program
         // Add Database Context for EF Core
         builder.Services.AddDbContext<DataContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Dev"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Cloud"));
         });
 
         var app = builder.Build();
