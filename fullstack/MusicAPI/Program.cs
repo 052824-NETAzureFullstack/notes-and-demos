@@ -18,7 +18,7 @@ public class Program
             options.AddPolicy( name: CORSPolicy,
                                 policy => 
                                 {
-                                    policy.WithOrigins("http://localhost:4200")
+                                    policy.AllowAnyOrigin()
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
                                 });
