@@ -8,7 +8,7 @@ import { NewSong } from './../Models/new-song'
   providedIn: 'root'
 })
 export class SongService {
-  URL: string = 'http://localhost:5295/api/Song';
+  URL: string = 'https://hawkins-music-api.azurewebsites.net/api/song';
   http = inject(HttpClient);
   constructor() { }
 
